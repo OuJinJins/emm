@@ -1,13 +1,14 @@
 package com.oujinjin.entity;
 
+import java.io.Serializable;
+import java.lang.invoke.SerializedLambda;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class User {
-    static  int id = 0;
+public class User implements Serializable {
+    static  int id = 1;
     private String name;
     private String password;
-    private int money;
     public boolean flag = false;//ture 管理员 /false 普通用户
 
     /*

@@ -1,6 +1,7 @@
 package com.oujinjin.service;
 import com.oujinjin.entity.Num;
 import com.oujinjin.entity.Goods;
+import com.oujinjin.entity.Opt;
 import com.oujinjin.entity.User;
 
 import java.io.File;
@@ -13,57 +14,39 @@ public class ProductClient {
     public static void main(String[] args) throws IOException,ClassNotFoundException {
         Num i = new Num();
 
-        //进阶没做完.跳到51行
-        //创建文件
         File file = new File("D:\\Goods.txt");
         File file2 = new File("D:\\User.txt");
-        boolean b = file.createNewFile();
-        boolean b2 = file2.createNewFile();
-         if(b){
-             System.out.println("a");
-         }
-         else {
-            System.out.println("b");
-        }
+        File file3 = new File("D:\\Opt.txt");
 
-        if(b2){
-            System.out.println("a");
-        }
-        else {
-            System.out.println("b");
-        }
-//------------------//
-        CommodityManager c = new CommodityManager();
+        file.createNewFile();
+        file2.createNewFile();
+        file3.createNewFile();
+
+        UserGoodsManager c = new UserGoodsManager();
         ArrayList<Goods> listPro = new ArrayList<>();
         ArrayList<User> list = new ArrayList<>();
+        ArrayList<Opt> listOpt = new ArrayList<>();
         Rl rl = new Rl();
         Crud crud = new Crud();
         Purchase purchase = new Purchase();
         boolean back = false;//是否返回上一级
 
-        //获取本地数据
 
-        c.getSystemUsers(list);
-        c.getGoods(listPro);
+        c.getSystemUsers(list);//获取用户信息
+        if (file.length()!=0)
+        c.getGoods(listPro);//获取商品信息
+        if (file3.length()!=0)
+        c.getOpt(listOpt);//获取商操作日志
 
 
-
- //唉第二个功能报废了...
-//--------------------------------------------------------------//
         while(!back) {
-            if (rl.rl(list)) {
-                //System.out.println(list.get(0).getName());
+            if (rl.rl(list,listOpt)) {
+
                 System.out.println("管理员登陆成功!");
                 ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("User.txt"));
-/*
-                list.get(0).setName("admin");
-                list.get(0).setPassword("admin");
-                //把内容中的用户信息写入本地
-                c.writeSystemUsers(list);
-                oos.writeObject(list);
-*/
-                crud.zsgc(listPro);
-                continue;
+
+                crud.zsgc(listPro,listOpt);
+
             }
             else {
                 System.out.println("用户登陆成功!");

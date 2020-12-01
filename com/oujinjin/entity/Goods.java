@@ -1,6 +1,8 @@
 package com.oujinjin.entity;
 
-public class Goods {
+import java.io.Serializable;
+
+public class Goods implements Serializable {
     //商品名称
     private String name;
     //商品编号

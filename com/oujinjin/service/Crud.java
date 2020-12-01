@@ -1,5 +1,6 @@
 package com.oujinjin.service;
 
+import com.oujinjin.entity.Opt;
 import com.oujinjin.view.View;
 import com.oujinjin.entity.Goods;
 
@@ -9,32 +10,50 @@ import java.util.Scanner;
 public class Crud {
     Scanner input = new Scanner(System.in);
     View view = new View();
-    CommodityManager c = new CommodityManager();
+    UserGoodsManager c = new UserGoodsManager();
 
-    public void zsgc(ArrayList<Goods> listPro) {
+    public void zsgc(ArrayList<Goods> listPro,ArrayList<Opt> listOpt) {
         while (true) {
             switch (view.zsgc()) {
                 case 1:
-                    add(listPro);
+                    add(listPro);//增
+                    listOpt.add(new Opt("增加了商品"));
+                    c.writeOpt(listOpt);
                     c.writeGoods(listPro);
                     break;
                 case 2:
-                    del(listPro);
+                    del(listPro);//删
+                    listOpt.add(new Opt("删除了商品"));
+                    c.writeOpt(listOpt);
                     c.writeGoods(listPro);
                     break;
                 case 3:
-                    mod(listPro);
+                    mod(listPro);//改
+                    listOpt.add(new Opt("修改了商品"));
+                    c.writeOpt(listOpt);
                     c.writeGoods(listPro);
                     break;
                 case 4:
-                    searchOne(listPro);
+                    listOpt.add(new Opt("查找单个商品"));
+                    c.writeOpt(listOpt);
+                    searchOne(listPro);//查
                     break;
                 case 5:
-                    searchAll(listPro);
+                    searchAll(listPro);//查
+                    listOpt.add(new Opt("查找所有商品"));
+                    c.writeOpt(listOpt);
                     break;
                 case 6:
-                    c.writeGoods(listPro);
+                    listOpt.add(new Opt("退出登陆"));
+                    c.writeOpt(listOpt);
+                    c.writeGoods(listPro);//退出
                     return;//退出登陆
+                case 7:
+                    for (Opt p:listOpt)
+                    {
+                        System.out.println(p);
+                    }
+                    break;
                 default:
                     System.out.println("输入错误！");
                     break;

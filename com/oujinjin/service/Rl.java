@@ -1,6 +1,7 @@
 package com.oujinjin.service;
 
 import com.oujinjin.entity.Num;
+import com.oujinjin.entity.Opt;
 import com.oujinjin.entity.User;
 import com.oujinjin.view.View;
 import java.util.ArrayList;
@@ -10,26 +11,28 @@ public class Rl {
     View view = new View();
     boolean flag;//是否为管理员
     Num i = new Num();
-    CommodityManager c = new CommodityManager();
+    UserGoodsManager c = new UserGoodsManager();
 
-    public boolean rl(ArrayList<User> list) {
+    public boolean rl(ArrayList<User> list,ArrayList<Opt> listOpt) {
         switch (view.rl()) {
             case 1://用户注册
                 switch (view.register()){
                     case 1:
                         register(list, true);//管理员注册
-                        this.rl(list);
+                        this.rl(list,listOpt);
                         return list.get(i.i).flag;//返回是否为管理员
                     case 2:
                         register(list, false);//普通用户注册
-                        this.rl(list);
+                        this.rl(list,listOpt);
                         return list.get(i.i).flag;//返回是否为管理员
                     default :
                         System.out.println("输入错误!");
                         break;
                 }
             case 2://用户登陆
-                login(list,i);
+                login(list,i,listOpt);
+                listOpt.add(new Opt("登陆账号"));
+                c.writeOpt(listOpt);
                 if (list.get(i.i).flag)
                 return list.get(i.i).flag;//返回是否为管理员
             default :
@@ -58,10 +61,11 @@ public class Rl {
         System.out.println("注册成功！您是第" + user.getId() + "位注册用户");
 
         //写入数据
+
         c.writeSystemUsers(list);
     }
 
-    public void login(ArrayList<User> list,Num i) {
+    public void login(ArrayList<User> list,Num i,ArrayList<Opt> listOpt) {
         System.out.println("正在登录……");
         Scanner input = new Scanner(System.in);
         System.out.print("用户名：");
@@ -94,7 +98,7 @@ public class Rl {
 
         //如果未能成功匹配，则证明用户名或密码有误，重新登录
         System.out.println("您输入的用户名或密码有误");
-        this.rl(list);
+        this.rl(list,listOpt);
         return;
     }
 
