@@ -420,6 +420,8 @@ ID
 ####基本数据类型与字符串转换
 ![IDEA](images\包装类2.png)
 ###Collect集合
+![IDEA](images\coll.png)
+
 ![IDEA](images\集合.png)
 ###io操作
 ####File
